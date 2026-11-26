@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BBC Coach Directory & Level Roadmap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bbc-red: #EE1C25;
+      --bbc-red-dark: #C81018;
+      --bbc-red-light: #FFF0F1;
+      --bbc-red-border: #FBC7CA;
+      --cat-reg: #EE1C25;
+      --cat-dyn: #2563EB;
+      --cat-ecp: #7C3AED;
+      --cat-private: #059669;
+      --bg-page: #F8F9FA;
+      --bg-card: #FFFFFF;
+      --text-main: #18181B;
+      --text-secondary: #52525B;
+      --text-muted: #71717A;
+      --border-light: #E4E4E7;
+      --status-active-bg: #ECFDF5;
+      --status-active-text: #047857;
+      --status-active-dot: #10B981;
+      --status-hiatus-bg: #FFFBEB;
+      --status-hiatus-text: #B45309;
+      --status-hiatus-dot: #F59E0B;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 10px 25px rgba(238, 28, 37, 0.08);
+      --shadow-lg: 0 16px 36px rgba(24, 24, 27, 0.10);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =========================================================
+       STICKY HEADER
+       ========================================================= */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, var(--bbc-red) 0%, var(--bbc-red-dark) 100%);
+      color: #FFFFFF;
+      padding: 18px 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(238, 28, 37, 0.25);
+      transition: padding 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .top-header.scrolled {
+      padding: 12px 24px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .top-header::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.07);
+      pointer-events: none;
+    }
+
+    .header-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-wrapper {
+      background: #FFFFFF;
+      padding: 6px 12px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 54px;
+      min-width: 88px;
+      transition: height 0.25s ease;
+    }
+
+    .top-header.scrolled .logo-wrapper {
+      height: 44px;
+      min-width: 76px;
+    }
+
+    .logo-wrapper img {
+      max-height: 40px;
+      max-width: 130px;
+      object-fit: contain;
+      display: block;
+      transition: max-height 0.25s ease;
+    }
+
+    .top-header.scrolled .logo-wrapper img {
+      max-height: 32px;
+    }
+
+    .logo-fallback {
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.5px;
+      color: var(--bbc-red);
+      display: none;
+    }
+
+    .header-titles h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      transition: font-size 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .top-header.scrolled .header-titles h1 {
+      font-size: 1.25rem;
+    }
+
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.3);
+    }
+
+    .sync-badge.syncing .sync-dot {
+      background: #FACC15;
+      animation: pulseSync 1s infinite;
+    }
+
+    .sync-badge.offline .sync-dot {
+      background: #FB923C;
+    }
+
+    @keyframes pulseSync {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .header-titles p {
+      font-size: 0.86rem;
+      opacity: 0.92;
+      margin-top: 2px;
+      font-weight: 400;
+    }
+
+    .top-header.scrolled .header-titles p {
+      font-size: 0.78rem;
+    }
+
+    .header-stats {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .refresh-btn {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #FFFFFF;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.25s;
+    }
+
+    .refresh-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .refresh-btn.spinning {
+      animation: spinBtn 0.8s linear infinite;
+    }
+
+    @keyframes spinBtn {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      text-align: center;
+      min-width: 84px;
+    }
+
+    .stat-pill .num {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .stat-pill .lbl {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.9;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px 24px 64px;
+    }
+
+    /* Section Headings */
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .section-title .accent-bar {
+      width: 5px;
+      height: 22px;
+      background: var(--bbc-red);
+      border-radius: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================
+       LEVEL ROADMAP
+       ========================================================= */
+    .roadmap-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 34px;
+    }
+
+    .roadmap-legend {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border-light);
+    }
+
+    .legend-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .cat-REG { background-color: var(--cat-reg); }
+    .cat-DYN { background-color: var(--cat-dyn); }
+    .cat-ECP { background-color: var(--cat-ecp); }
+    .cat-Private { background-color: var(--cat-private); }
+
+    .roadmap-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .roadmap-scroll-wrapper {
+      overflow-x: auto;
+      padding: 84px 24px 26px;
+      scrollbar-width: thin;
+      scrollbar-color: #D4D4D8 #F4F4F5;
+    }
+
+    .roadmap-scroll-wrapper::-webkit-scrollbar {
+      height: 8px;
+    }
+    .roadmap-scroll-wrapper::-webkit-scrollbar-track {
+      background: #F4F4F5;
+      border-radius: 99px;
+    }
+    .roadmap-scroll-wrapper::-webkit-scrollbar-thumb {
+      background: #D4D4D8;
+      border-radius: 99px;
+    }
+    .roadmap-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+      background: var(--bbc-red);
+    }
+
+    .roadmap-track {
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+      min-width: max-content;
+      padding: 0 18px;
+    }
+
+    .roadmap-track::before {
+      content: "";
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 3px;
+      background: #E4E4E7;
+      z-index: 1;
+      border-radius: 3px;
+    }
+
+    .level-node {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 78px;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .level-node.has-multi {
+      width: 114px;
+    }
+
+    .level-node:hover {
+      transform: translateY(-2px);
+      z-index: 10;
+    }
+
+    .node-handlers {
+      position: absolute;
+      bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      pointer-events: auto;
+    }
+
+    .avatar-stack {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mini-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+      object-fit: cover;
+      background: var(--bbc-red);
+      color: #FFF;
+      font-size: 0.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: -7px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .mini-avatar:first-child {
+      margin-left: 0;
+    }
+
+    .level-node:hover .mini-avatar {
+      transform: scale(1.12);
+    }
+
+    .handler-label {
+      background: var(--text-main);
+      color: #FFFFFF;
+      font-size: 0.64rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.14);
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .level-node[data-cat="REG"] { --node-color: var(--cat-reg); }
+    .level-node[data-cat="DYN"] { --node-color: var(--cat-dyn); }
+    .level-node[data-cat="ECP"] { --node-color: var(--cat-ecp); }
+    .level-node[data-cat="Private"] { --node-color: var(--cat-private); }
+
+    .node-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 3.5px solid var(--node-color, #A1A1AA);
+      transition: all 0.2s ease;
+      box-shadow: 0 0 0 3px #FFFFFF;
+    }
+
+    .level-node.has-teacher .node-dot {
+      width: 20px;
+      height: 20px;
+      background: var(--node-color, var(--bbc-red));
+      border: 3.5px solid #FFFFFF;
+      box-shadow: 0 0 0 2.5px var(--node-color, var(--bbc-red));
+    }
+
+    .level-node.has-teacher .mini-avatar {
+      background: var(--node-color, var(--bbc-red));
+    }
+
+    .level-node.selected .node-dot {
+      transform: scale(1.28);
+      box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.22);
+    }
+
+    .node-info {
+      position: absolute;
+      top: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .node-code {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .level-node.has-teacher .node-code {
+      color: var(--node-color, var(--bbc-red));
+    }
+
+    .node-cat {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--node-color, var(--text-muted));
+      opacity: 0.85;
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       FILTER & SEARCH CONTROLS
+       ========================================================= */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background: var(--bg-card);
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--border-light);
+      background: #FFFFFF;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--bbc-red);
+      color: var(--bbc-red);
+    }
+
+    .filter-btn.active {
+      background: var(--bbc-red);
+      border-color: var(--bbc-red);
+      color: #FFFFFF;
+      box-shadow: 0 3px 10px rgba(238, 28, 37, 0.25);
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 250px;
+      flex: 1;
+      max-width: 340px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 14px 8px 36px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-light);
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--bbc-red);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    .active-filter-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bbc-red-light);
+      border: 1px solid var(--bbc-red-border);
+      color: var(--bbc-red-dark);
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .active-filter-banner.visible {
+      display: flex;
+    }
+
+    .clear-level-btn {
+      background: var(--bbc-red);
+      color: #FFF;
+      border: none;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* =========================================================
+       COACH PROFILE CARDS GRID
+       ========================================================= */
+    .coach-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .coach-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .coach-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--bbc-red-border);
+    }
+
+    .coach-card.is-hiatus {
+      background: #FCFCFD;
+    }
+
+    .coach-card.is-hiatus .photo-frame img {
+      filter: grayscale(25%);
+      opacity: 0.88;
+    }
+
+    .card-top-banner {
+      height: 82px;
+      background: linear-gradient(135deg, var(--bbc-red) 0%, #FF4D54 100%);
+      position: relative;
+    }
+
+    .coach-card.is-hiatus .card-top-banner {
+      background: linear-gradient(135deg, #71717A 0%, #A1A1AA 100%);
+    }
+
+    .anim-badge {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(4px);
+      color: #FFFFFF;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      max-width: 62%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .coach-card:hover .anim-badge {
+      background: rgba(255, 255, 255, 0.34);
+      transform: scale(1.02);
+    }
+
+    .status-badge {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-badge.active {
+      background: var(--status-active-bg);
+      color: var(--status-active-text);
+    }
+
+    .status-badge.hiatus {
+      background: var(--status-hiatus-bg);
+      color: var(--status-hiatus-text);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .status-badge.active .status-dot {
+      background: var(--status-active-dot);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+    }
+
+    .status-badge.hiatus .status-dot {
+      background: var(--status-hiatus-dot);
+    }
+
+    .profile-identity {
+      padding: 0 22px;
+      margin-top: -46px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .photo-frame {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      border: 4px solid #FFFFFF;
+      background: var(--bbc-red-light);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease;
+    }
+
+    .coach-card:hover .photo-frame {
+      transform: rotate(-2deg) scale(1.03);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-initials {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--bbc-red);
+      display: none;
+    }
+
+    .name-block {
+      flex: 1;
+      padding-bottom: 4px;
+    }
+
+    .coach-nickname {
+      font-size: 1.48rem;
+      font-weight: 800;
+      color: var(--bbc-red);
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nickname-emoji {
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .coach-card.is-hiatus .coach-nickname {
+      color: var(--text-main);
+    }
+
+    .coach-realname {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 2px;
+      letter-spacing: 0.01em;
+    }
+
+    .card-body {
+      padding: 16px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 14px;
+    }
+
+    .philosophy-quote {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--bbc-red-dark);
+      background: var(--bbc-red-light);
+      padding: 8px 12px;
+      border-radius: 10px;
+      border-left: 3px solid var(--bbc-red);
+    }
+
+    .coach-card.is-hiatus .philosophy-quote {
+      background: #F4F4F5;
+      color: var(--text-secondary);
+      border-left-color: #A1A1AA;
+    }
+
+    .story-box {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.58;
+    }
+
+    .story-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .classes-section {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    .class-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .class-pill {
+      background: var(--bbc-red);
+      color: #FFFFFF;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .class-pill:hover {
+      background: var(--bbc-red-dark);
+    }
+
+    .class-pill.hiatus-pill {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1px solid #FDE68A;
+      cursor: default;
+    }
+
+    .card-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 4px;
+    }
+
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag-chip {
+      background: #F4F4F5;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      transition: all 0.15s;
+    }
+
+    .coach-card:hover .tag-chip {
+      background: var(--bbc-red-light);
+      color: var(--bbc-red-dark);
+    }
+
+    .play-anim-btn {
+      background: var(--bbc-red-light);
+      color: var(--bbc-red);
+      border: 1px solid var(--bbc-red-border);
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.18s;
+    }
+
+    .play-anim-btn:hover {
+      background: var(--bbc-red);
+      color: #FFFFFF;
+      border-color: var(--bbc-red);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      border: 1px dashed var(--border-light);
+      color: var(--text-muted);
+      display: none;
+    }
+
+    /* =========================================================
+       SIGNATURE DOODLE ANIMATION MODAL (SAAT KARTU DIKLIK)
+       ========================================================= */
+    .anim-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(24, 24, 27, 0.62);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .anim-modal-backdrop.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .anim-modal-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      max-width: 440px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+      border: 1px solid var(--border-light);
+      transform: translateY(14px) scale(0.97);
+      transition: transform 0.25s ease;
+      position: relative;
+    }
+
+    .anim-modal-backdrop.open .anim-modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-main);
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .modal-close-btn:hover {
+      background: var(--bbc-red);
+      color: #FFFFFF;
+      transform: scale(1.08);
+    }
+
+    .modal-stage {
+      background: radial-gradient(circle at center, #FFFFFF 0%, #FFF5F5 100%);
+      border-bottom: 1px dashed var(--bbc-red-border);
+      padding: 28px 20px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .doodle-canvas-box {
+      width: 210px;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .doodle-canvas-box svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* Stroke drawing animation classes */
+    .draw-stroke {
+      fill: none;
+      stroke: #18181B;
+      stroke-width: 5.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawLine var(--dur, 1.1s) ease forwards var(--delay, 0s);
+    }
+
+    .draw-stroke-red {
+      stroke: var(--bbc-red);
+    }
+
+    .draw-stroke-thin {
+      stroke-width: 4;
+    }
+
+    .pop-in {
+      opacity: 0;
+      transform-origin: center;
+      animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards var(--delay, 0.8s);
+    }
+
+    .handwritten-svg-text {
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      fill: transparent;
+      stroke: var(--bbc-red);
+      stroke-width: 1.8;
+      stroke-dasharray: 420;
+      stroke-dashoffset: 420;
+      animation: writeText 1.4s ease forwards 0.15s, fillText 0.45s ease forwards 1.25s;
+    }
+
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes writeText {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes fillText {
+      to { fill: var(--bbc-red); }
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.4); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-caption-pill {
+      margin-top: 8px;
+      background: #FFFFFF;
+      border: 1px solid var(--bbc-red-border);
+      color: var(--bbc-red-dark);
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(238, 28, 37, 0.08);
+    }
+
+    .modal-body-content {
+      padding: 20px 24px 24px;
+    }
+
+    .modal-coach-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .modal-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 2px solid var(--bbc-red-border);
+      background: var(--bbc-red-light);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--bbc-red);
+      overflow: hidden;
+    }
+
+    .modal-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-nick {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--bbc-red);
+      line-height: 1.2;
+    }
+
+    .modal-real {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .modal-story {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      background: #F8F9FA;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+    }
+
+    .modal-actions {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .replay-btn {
+      background: var(--bbc-red);
+      color: #FFFFFF;
+      border: none;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(238, 28, 37, 0.25);
+      transition: background 0.15s;
+    }
+
+    .replay-btn:hover {
+      background: var(--bbc-red-dark);
+    }
+
+    @media (max-width: 640px) {
+      .header-titles h1 { font-size: 1.25rem; }
+      .header-titles p { display: none; }
+      .coach-grid { grid-template-columns: 1fr; }
+      .search-box { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY TOP BRAND HEADER -->
+  <header class="top-header" id="topHeader">
+    <div class="header-inner">
+      <div class="brand-group">
+        <div class="logo-wrapper">
+          <img
+            src="https://drive.google.com/thumbnail?id=1xp4tsE6RhaxXFSC7XQN45_3TOdUsUe5j&sz=w400"
+            alt="BBC Logo"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='block';"
+          />
+          <span id="logoFallback" class="logo-fallback">BBC</span>
+        </div>
+        <div class="header-titles">
+          <h1>
+            <span>BBC Coach Directory</span>
+            <span class="sync-badge syncing" id="syncBadge" title="Sinkronisasi otomatis dengan Google Sheets">
+              <span class="sync-dot"></span>
+              <span id="syncText">Menghubungkan ke Sheets...</span>
+            </span>
+          </h1>
+          <p>Internal Team Wall of Fame &bull; Klik kartu Coach untuk melihat animasi karakter!</p>
+        </div>
+      </div>
+
+      <div class="header-stats">
+        <button class="refresh-btn" id="manualRefreshBtn" title="Muat ulang data terbaru dari Google Sheets">↻</button>
+        <div class="stat-pill">
+          <span class="num" id="statTotal">0</span>
+          <span class="lbl">Total Coach</span>
+        </div>
+        <div class="stat-pill">
+          <span class="num" id="statActive">0</span>
+          <span class="lbl">Active</span>
+        </div>
+        <div class="stat-pill">
+          <span class="num" id="statLevels">0</span>
+          <span class="lbl">Jenjang Level</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SECTION 1: LEVEL ROADMAP -->
+    <section aria-label="Level Roadmap">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="accent-bar"></span>
+          <span>Peta Jenjang Level &amp; Pengampu Kelas</span>
+        </div>
+        <span class="section-subtitle">Geser ke kanan untuk melihat seluruh alur jenjang &bull; Klik titik level untuk memfilter Coach</span>
+      </div>
+
+      <div class="roadmap-card">
+        <div class="roadmap-legend">
+          <div class="legend-items">
+            <span class="legend-item"><span class="legend-dot cat-REG"></span> REG (Regular)</span>
+            <span class="legend-item"><span class="legend-dot cat-DYN"></span> DYN (Dynamic)</span>
+            <span class="legend-item"><span class="legend-dot cat-ECP"></span> ECP</span>
+            <span class="legend-item"><span class="legend-dot cat-Private"></span> Private</span>
+          </div>
+          <span class="roadmap-hint">*Otomatis terupdate sesuai tab Profil &amp; tab Level di Google Sheets</span>
+        </div>
+
+        <div class="roadmap-scroll-wrapper">
+          <div class="roadmap-track" id="roadmapTrack"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: FILTER & SEARCH BAR -->
+    <section aria-label="Coach Profiles">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="accent-bar"></span>
+          <span>Profil Coach BBC</span>
+        </div>
+        <span class="section-subtitle">Klik kartu Coach mana saja untuk memutar animasi karakter ✨</span>
+      </div>
+
+      <div class="controls-bar">
+        <div class="filter-pills" id="filterPills">
+          <button class="filter-btn active" data-filter="ALL">Semua Coach</button>
+          <button class="filter-btn" data-filter="Active">● Active</button>
+          <button class="filter-btn" data-filter="Hiatus">⏸ Hiatus</button>
+          <button class="filter-btn" data-filter="#KidsAndTeens">#KidsAndTeens</button>
+          <button class="filter-btn" data-filter="#AdultClass">#AdultClass</button>
+          <button class="filter-btn" data-filter="#GeneralEnglish">#GeneralEnglish</button>
+          <button class="filter-btn" data-filter="#BusinessEnglish">#BusinessEnglish</button>
+          <button class="filter-btn" data-filter="#IELTSPreparation">#IELTSPreparation</button>
+          <button class="filter-btn" data-filter="#TOEFLPreparation">#TOEFLPreparation</button>
+        </div>
+
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Cari nickname, nama, atau kelas..." />
+        </div>
+      </div>
+
+      <div class="active-filter-banner" id="levelFilterBanner">
+        <span id="levelFilterText">Menampilkan pengampu untuk level: -</span>
+        <button class="clear-level-btn" id="clearLevelBtn">Tampilkan Semua</button>
+      </div>
+
+      <div class="coach-grid" id="coachGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- MODAL ANIMASI SIGNATURE COACH -->
+  <div class="anim-modal-backdrop" id="animModalBackdrop" aria-hidden="true">
+    <div class="anim-modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeModalBtn" title="Tutup">✕</button>
+
+      <div class="modal-stage">
+        <div class="doodle-canvas-box" id="doodleCanvasBox"></div>
+        <div class="modal-caption-pill">
+          <span>✨</span>
+          <span id="modalAnimLabel">Signature Animation</span>
+        </div>
+      </div>
+
+      <div class="modal-body-content">
+        <div class="modal-coach-row">
+          <div class="modal-avatar" id="modalAvatarBox"></div>
+          <div>
+            <div class="modal-nick" id="modalNickname">Mr. Fun 😄</div>
+            <div class="modal-real" id="modalRealname">Mr. Irfan</div>
+          </div>
+        </div>
+
+        <p class="modal-story" id="modalStory"></p>
+
+        <div class="modal-actions">
+          <button class="replay-btn" id="replayAnimBtn">↻ Ulangi Animasi</button>
+          <span style="font-size:0.74rem;color:var(--text-muted);" id="modalClassesText"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================
+    // KONFIGURASI GOOGLE SHEETS LIVE SYNC
+    // =========================================================
+    const SPREADSHEET_ID = "1gtqy-R9hkaoMthOmTZf5IpG3mISsWVyhXp7qkOU1WME";
+    const SHEET_PROFIL_NAME = "Profil";
+    const SHEET_LEVEL_NAME = "Level";
+    const PHOTO_BASE_PATH = "";
+
+    const EMOJI_MAP = {
+      "Mr. Fun": "😄",
+      "Ms. End": "🏁",
+      "Ms. Feet": "👣",
+      "Ms. Line": "📏",
+      "Ms. Chiffon": "🍰",
+      "Ms. Fairly": "🧚‍♀️",
+      "Ms. Key": "🔑",
+      "Ms. Rain": "🌧️",
+      "Mr. One": "1️⃣",
+      "Ms. Done": "✅"
+    };
+
+    // Data cadangan lokal jika browser dibuka tanpa internet / offline
+    const FALLBACK_TEACHERS = [
+  {
+    "id": 1,
+    "realname": "Mr. Irfan",
+    "nickname": "Mr. Fun",
+    "emoji": "😄",
+    "filosofi": "Menghadirkan keceriaan, keseruan, dan energi positif di setiap sesi belajar",
+    "story": "Belajar bahasa Inggris sering dianggap kaku dan menegangkan? Di kelas Mr. Fun, Belajar akan terasa seperti bermain, seru, dan penuh tawa. Learning English is always FUN with Mr. Fun!",
+    "animasi": "Menggambar wajah tertawa",
+    "tags": [
+      "#AdultClass",
+      "#GeneralEnglish"
+    ],
+    "classes": [
+      "BS1",
+      "ECP1",
+      "GE",
+      "BE"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/1kiHWYZ1vibae7akW8iX2SSmYLb4A6exJ/view?usp=sharing"
+  },
+  {
+    "id": 2,
+    "realname": "Ms. Endah",
+    "nickname": "Ms. End",
+    "emoji": "🏁",
+    "filosofi": "Mengakhiri semua keluhan, rasa menyerah, dan ketakutan murid terhadap bahasa Inggris",
+    "story": "\"Beberapa keluhan students: 'Miss, bahasa Inggris susah banget, saya pusing sama rumusnya...' Nah, semua kesulitan belajar bahasa Inggris kalian sudah BERAKHIR bersama Ms. END!\"",
+    "animasi": "Menulis The End",
+    "tags": [
+      "#KidsAndTeens"
+    ],
+    "classes": [
+      "EL1",
+      "PC4A"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/11Kv1M8rtv5eXNJy4uvXhhHsEdwhn1GRV/view?usp=sharing"
+  },
+  {
+    "id": 3,
+    "realname": "Ms. Fitri",
+    "nickname": "Ms. Feet",
+    "emoji": "👣",
+    "filosofi": "Langkah awal berani menjelajahi dunia",
+    "story": "\"Belajar bahasa Inggris itu seperti perjalanan panjang. Dan di dalam kelas, Ms. Feet siap menjadi langkah kaki pertama students untuk menjelajahi dunia tanpa takut!\"",
+    "animasi": "Menggambar langkah kaki",
+    "tags": [
+      "#KidsAndTeens"
+    ],
+    "classes": [],
+    "status": "Hiatus",
+    "photo": "https://drive.google.com/file/d/1tQqvG_hjlZvYDUOWDmg9RtFTfDQNFTYf/view?usp=sharing"
+  },
+  {
+    "id": 4,
+    "realname": "Ms. Lina",
+    "nickname": "Ms. Line",
+    "emoji": "📏",
+    "filosofi": "Fokus, lurus, dan langsung ke tujuan tanpa bertele-tele",
+    "story": "\"Garis lurus melambangkan fokus utama. Di kelas Ms. Line, pembelajaran tidak bertele-tele. Jalan students mahir bahasa Inggris akan dibuat lurus, cepat, dan terarah!\"",
+    "animasi": "Membuat garis lurus horizontal",
+    "tags": [
+      "#KidsAndTeens",
+      "#GeneralEnglish"
+    ],
+    "classes": [
+      "PB2",
+      "PC1B",
+      "GE"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/1mzY8lcrev2YgEC_V5E5gfA7gWr9255ww/view?usp=sharing"
+  },
+  {
+    "id": 5,
+    "realname": "Ms. Syifa",
+    "nickname": "Ms. Chiffon",
+    "emoji": "🍰",
+    "filosofi": "Proses belajar yang manis, santai, dan menyenangkan.",
+    "story": "\"Kue chiffon itu sangat lembut dan manis! Belajar bahasa Inggris dengan Ms. Chiffon rasanya akan terasa sama: lembut, santai, manis, dan menyenangkan!\"",
+    "animasi": "Menulis kata Chiffon",
+    "tags": [
+      "#KidsAndTeens"
+    ],
+    "classes": [
+      "PB2",
+      "PC6A"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/1G1b_8vF5doqNFQfAVxuevuxzvhVGmU6O/view?usp=sharing"
+  },
+  {
+    "id": 6,
+    "realname": "Ms. Ferina",
+    "nickname": "Ms. Fairly",
+    "emoji": "🧚‍♀️",
+    "filosofi": "Membawa keajaiban dan keceriaan dalam belajar",
+    "story": "\"Di kelas Ms. Fairy, kita akan mengubah pelajaran bahasa Inggris yang tadinya membosankan menjadi penuh keajaiban, permainan seru, dan kebahagiaan!\"",
+    "animasi": "Menggambar tongkat peri",
+    "tags": [
+      "#IELTSPreparation",
+      "#BusinessEnglish"
+    ],
+    "classes": [
+      "IELTS"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/1qwpyhlKZ_8jACHc-xxk0ngLPUImaWWBN/view?usp=sharing"
+  },
+  {
+    "id": 7,
+    "realname": "Ms. Rika",
+    "nickname": "Ms. Key",
+    "emoji": "🔑",
+    "filosofi": "Pembuka gerbang kesempatan & masa depan",
+    "story": "\"Pintu masa depan students terkunci karena belum mahir bahasa Inggris? Ms. Key hadir membawa kuncinya! It's time to unlock the future with Ms. Key!\"",
+    "animasi": "Menggambar kunci",
+    "tags": [
+      "#KidsAndTeens"
+    ],
+    "classes": [
+      "PC6A"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/1eRQomuGLQDZcJliLhA2L-Qdem4lxnm6l/view?usp=sharing"
+  },
+  {
+    "id": 8,
+    "realname": "Mr. Rendi",
+    "nickname": "Ms. Rain",
+    "emoji": "🌧️",
+    "filosofi": "Menyirami dahaga ilmu agar kemampuan tumbuh subur.",
+    "story": "\"Hujan membasahi tanah yang kering. Mr. Rain hadir menyirami otak students dengan ilmu bahasa Inggris supaya kemampuan kalian tumbuh subur dan sejuk!\"",
+    "animasi": "Menggambar tetesan air dan awan",
+    "tags": [
+      "#KidsAndTeens",
+      "#BusinessEnglish"
+    ],
+    "classes": [
+      "INT2"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/1iTRg8D7Z2gYGIpsswjXVFX_a2M7ktNSw/view?usp=sharing"
+  },
+  {
+    "id": 9,
+    "realname": "Mr. Ridwan",
+    "nickname": "Mr. One",
+    "emoji": "1️⃣",
+    "filosofi": "Misi tunggal menjadikan murid juara nomor satu.",
+    "story": "“Kenapa One? Karena di kelas ini, misi Mr. One cuma satu: mengubah students menjadi murid nomor satu yang paling jago bahasa Inggris.”",
+    "animasi": "Menulis angka 1 besar",
+    "tags": [
+      "#KidsAndTeens",
+      "#TOEFLPreparation"
+    ],
+    "classes": [
+      "BE2",
+      "PC2B"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/1HEpvXe2JVzjhm3XFLQMF7qSEE8ecCGDl/view?usp=sharing"
+  },
+  {
+    "id": 10,
+    "realname": "Mr. Danu",
+    "nickname": "Ms. Done",
+    "emoji": "✅",
+    "filosofi": "Menuntaskan setiap tantangan, tugas, dan rasa ragu belajar sampai benar-benar paham",
+    "story": "\"Di dalam kelas, Mr. Done tidak akan membiarkan materi yang sulit menggantung tanpa jawaban. Setiap materi dan target belajar akan dituntaskan bersama. Get it DONE!\"",
+    "animasi": "Menggambar tanda centang besar",
+    "tags": [
+      "#AdultClass"
+    ],
+    "classes": [
+      "BS2"
+    ],
+    "status": "Active",
+    "photo": "https://drive.google.com/file/d/1krX9dqcn86EKtjCykjn-IZZfgHsiCAeD/view?usp=sharing"
+  }
+];
+    const FALLBACK_LEVELS = [
+  {
+    "order": 1,
+    "level": "PC1A",
+    "category": "REG"
+  },
+  {
+    "order": 2,
+    "level": "PC1B",
+    "category": "REG"
+  },
+  {
+    "order": 3,
+    "level": "PC2A",
+    "category": "REG"
+  },
+  {
+    "order": 4,
+    "level": "PC2B",
+    "category": "REG"
+  },
+  {
+    "order": 5,
+    "level": "PC3A",
+    "category": "REG"
+  },
+  {
+    "order": 6,
+    "level": "PC3B",
+    "category": "REG"
+  },
+  {
+    "order": 7,
+    "level": "PC4A",
+    "category": "REG"
+  },
+  {
+    "order": 8,
+    "level": "PC4B",
+    "category": "REG"
+  },
+  {
+    "order": 9,
+    "level": "DCC1",
+    "category": "DYN"
+  },
+  {
+    "order": 10,
+    "level": "PC5A",
+    "category": "REG"
+  },
+  {
+    "order": 11,
+    "level": "PC5B",
+    "category": "REG"
+  },
+  {
+    "order": 12,
+    "level": "DCC2",
+    "category": "DYN"
+  },
+  {
+    "order": 13,
+    "level": "PC6A",
+    "category": "REG"
+  },
+  {
+    "order": 14,
+    "level": "PC6B",
+    "category": "REG"
+  },
+  {
+    "order": 15,
+    "level": "DCC3",
+    "category": "DYN"
+  },
+  {
+    "order": 16,
+    "level": "PB1",
+    "category": "REG"
+  },
+  {
+    "order": 17,
+    "level": "PB2",
+    "category": "REG"
+  },
+  {
+    "order": 18,
+    "level": "DCT1",
+    "category": "DYN"
+  },
+  {
+    "order": 19,
+    "level": "BE1",
+    "category": "REG"
+  },
+  {
+    "order": 20,
+    "level": "BE2",
+    "category": "REG"
+  },
+  {
+    "order": 21,
+    "level": "DCT2",
+    "category": "DYN"
+  },
+  {
+    "order": 22,
+    "level": "PE1",
+    "category": "REG"
+  },
+  {
+    "order": 23,
+    "level": "PE2",
+    "category": "REG"
+  },
+  {
+    "order": 24,
+    "level": "DCT3",
+    "category": "DYN"
+  },
+  {
+    "order": 25,
+    "level": "BS1",
+    "category": "REG"
+  },
+  {
+    "order": 26,
+    "level": "BS2",
+    "category": "REG"
+  },
+  {
+    "order": 27,
+    "level": "DCA1",
+    "category": "DYN"
+  },
+  {
+    "order": 28,
+    "level": "EL1",
+    "category": "REG"
+  },
+  {
+    "order": 29,
+    "level": "EL2",
+    "category": "REG"
+  },
+  {
+    "order": 30,
+    "level": "DCA2",
+    "category": "DYN"
+  },
+  {
+    "order": 31,
+    "level": "INT1",
+    "category": "REG"
+  },
+  {
+    "order": 32,
+    "level": "INT2",
+    "category": "REG"
+  },
+  {
+    "order": 33,
+    "level": "DCA3",
+    "category": "DYN"
+  },
+  {
+    "order": 34,
+    "level": "PI1",
+    "category": "REG"
+  },
+  {
+    "order": 35,
+    "level": "PI2",
+    "category": "REG"
+  },
+  {
+    "order": 36,
+    "level": "DCA4",
+    "category": "DYN"
+  },
+  {
+    "order": 37,
+    "level": "ADV1",
+    "category": "REG"
+  },
+  {
+    "order": 38,
+    "level": "ADV2",
+    "category": "REG"
+  },
+  {
+    "order": 39,
+    "level": "ECIP1",
+    "category": "ECP"
+  },
+  {
+    "order": 40,
+    "level": "ECIP2",
+    "category": "ECP"
+  },
+  {
+    "order": 41,
+    "level": "GE",
+    "category": "Private"
+  },
+  {
+    "order": 42,
+    "level": "BE",
+    "category": "Private"
+  },
+  {
+    "order": 43,
+    "level": "TOEFL",
+    "category": "Private"
+  },
+  {
+    "order": 44,
+    "level": "TOEIC",
+    "category": "Private"
+  },
+  {
+    "order": 45,
+    "level": "IELTS",
+    "category": "Private"
+  }
+];
+
+    let TEACHERS_DATA = [];
+    let LEVELS_DATA = [];
+    let currentFilter = "ALL";
+    let selectedLevel = null;
+    let searchQuery = "";
+    let activeModalTeacher = null;
+
+    // Sticky header effect
+    window.addEventListener("scroll", () => {
+      const header = document.getElementById("topHeader");
+      if (window.scrollY > 24) header.classList.add("scrolled");
+      else header.classList.remove("scrolled");
+    });
+
+    function getInitials(name) {
+      return (name || "BC")
+        .replace(/^(Mr\.|Ms\.|Mrs\.)\s*/i, "")
+        .split(" ")
+        .map(w => w[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2);
+    }
+
+    function resolvePhotoUrl(photoValue) {
+      if (!photoValue) return "";
+      const val = photoValue.trim();
+      const driveMatch = val.match(/\/d\/([a-zA-Z0-9_-]+)/) || val.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (val.includes("drive.google.com") && driveMatch) {
+        return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w400`;
+      }
+      if (/^https?:\/\//i.test(val)) return val;
+      return PHOTO_BASE_PATH + val;
+    }
+
+    // =========================================================
+    // GOOGLE VISUALIZATION JSONP LOADER (ANTI-CORS UNTUK GITHUB / NETLIFY / VERCEL)
+    // =========================================================
+    function fetchGoogleSheetTab(sheetName) {
+      return new Promise((resolve, reject) => {
+        const callbackName = "gvizCb_" + sheetName.replace(/[^a-zA-Z0-9]/g, "") + "_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+        const script = document.createElement("script");
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error("Timeout fetching sheet: " + sheetName));
+        }, 8000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[callbackName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[callbackName] = function(response) {
+          cleanup();
+          if (!response || response.status === "error" || !response.table) {
+            reject(new Error("Invalid response from Google Sheets"));
+            return;
+          }
+          const cols = response.table.cols.map(c => (c.label || c.id || "").trim());
+          const rows = response.table.rows.map(r => {
+            const obj = {};
+            cols.forEach((colName, i) => {
+              const cell = r.c && r.c[i];
+              obj[colName] = cell && cell.v !== null && cell.v !== undefined ? String(cell.v).trim() : "";
+            });
+            return obj;
+          });
+          resolve(rows);
+        };
+
+        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?sheet=${encodeURIComponent(sheetName)}&headers=1&tqx=out:json;responseHandler:${callbackName}&_=${Date.now()}`;
+        script.src = url;
+        script.onerror = () => {
+          cleanup();
+          reject(new Error("Network error loading sheet: " + sheetName));
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    function buildLevelsWithHandlers(rawLevels, teachers) {
+      return rawLevels.map((lvlObj, idx) => {
+        const lvlCode = lvlObj.level;
+        const handlers = teachers
+          .filter(t => t.status !== "Hiatus" && (
+            t.classes.includes(lvlCode) ||
+            (lvlCode === "ECIP1" && t.classes.includes("ECP1")) ||
+            (lvlCode === "ECP1" && t.classes.includes("ECIP1"))
+          ))
+          .map(t => ({
+            id: t.id,
+            nickname: t.nickname,
+            emoji: t.emoji,
+            realname: t.realname,
+            photo: t.photo,
+            animasi: t.animasi,
+            status: t.status
+          }));
+
+        return {
+          order: idx + 1,
+          level: lvlCode,
+          category: lvlObj.category || "REG",
+          handlers
+        };
+      });
+    }
+
+    async function loadLiveSheetData() {
+      const badge = document.getElementById("syncBadge");
+      const syncText = document.getElementById("syncText");
+      const refreshBtn = document.getElementById("manualRefreshBtn");
+
+      badge.className = "sync-badge syncing";
+      syncText.textContent = "Menyinkronkan Sheets...";
+      refreshBtn.classList.add("spinning");
+
+      try {
+        const [profilRows, levelRows] = await Promise.all([
+          fetchGoogleSheetTab(SHEET_PROFIL_NAME),
+          fetchGoogleSheetTab(SHEET_LEVEL_NAME)
+        ]);
+
+        const parsedTeachers = profilRows
+          .filter(r => r["Realname"] || r["Nickname"])
+          .map((r, idx) => {
+            const real = r["Realname"] || "";
+            const nick = r["Nickname"] || real;
+            const kelasRaw = r["Kelas yang Diampu"] || "";
+            const isHiatus = kelasRaw.toLowerCase() === "hiatus";
+            const classes = isHiatus ? [] : kelasRaw.split(",").map(c => c.trim()).filter(Boolean);
+            const tagsRaw = r["Tags"] || "";
+            const tags = tagsRaw.split(/[
+,]+/).map(t => t.trim()).filter(Boolean);
+            const photoCol = r["Link foto"] || r["Link Foto"] || r["Foto"] || "";
+
+            return {
+              id: idx + 1,
+              realname: real,
+              nickname: nick,
+              emoji: EMOJI_MAP[nick] || "✨",
+              filosofi: r["Filosopi"] || r["Filosofi"] || "",
+              story: r["The Story Behind the Nickname"] || "",
+              animasi: r["Animasi"] || "",
+              tags,
+              classes,
+              status: isHiatus ? "Hiatus" : "Active",
+              photo: photoCol
+            };
+          });
+
+        const parsedRawLevels = levelRows
+          .filter(r => r["Level"])
+          .map((r, idx) => ({
+            order: idx + 1,
+            level: r["Level"].trim(),
+            category: (r["Keterangan"] || r["Kategori"] || "REG").trim()
+          }));
+
+        if (parsedTeachers.length > 0 && parsedRawLevels.length > 0) {
+          TEACHERS_DATA = parsedTeachers;
+          LEVELS_DATA = buildLevelsWithHandlers(parsedRawLevels, parsedTeachers);
+          badge.className = "sync-badge";
+          syncText.textContent = "Live Sync Sheets Aktif";
+        } else {
+          throw new Error("Empty sheet rows");
+        }
+      } catch (err) {
+        console.warn("Menggunakan data fallback lokal:", err);
+        TEACHERS_DATA = FALLBACK_TEACHERS;
+        LEVELS_DATA = buildLevelsWithHandlers(FALLBACK_LEVELS, FALLBACK_TEACHERS);
+        badge.className = "sync-badge offline";
+        syncText.textContent = "Mode Offline (Cache)";
+      } finally {
+        refreshBtn.classList.remove("spinning");
+        renderStats();
+        renderRoadmap();
+        renderCards();
+      }
+    }
+
+    // =========================================================
+    // CUSTOM SVG DOODLE ANIMATIONS (SESUAI KOLOM E TAB PROFIL)
+    // =========================================================
+    function buildSignatureAnimationSVG(teacher) {
+      const anim = (teacher.animasi || "").toLowerCase();
+      const nick = (teacher.nickname || "").toLowerCase();
+
+      // 1. Mr. Fun: Menggambar wajah tertawa (persis seperti contoh gambar bulat dengan mata ^^ dan mulut tertawa lebar)
+      if (anim.includes("tertawa") || nick.includes("fun")) {
+        return `
+          <svg viewBox="0 0 220 220" aria-label="Menggambar wajah tertawa">
+            <!-- Lingkaran wajah bulat -->
+            <circle cx="110" cy="110" r="84" class="draw-stroke" style="--dur:1.05s; --delay:0.05s;" />
+            <!-- Mata kiri melengkung ke atas (^) -->
+            <path d="M 63 92 L 77 78 L 91 92" class="draw-stroke" style="--dur:0.45s; --delay:0.75s;" />
+            <!-- Mata kanan melengkung ke atas (^) -->
+            <path d="M 129 92 L 143 78 L 157 92" class="draw-stroke" style="--dur:0.45s; --delay:0.95s;" />
+            <!-- Mulut tertawa lebar (garis datar atas + lengkung bawah) -->
+            <path d="M 55 118 L 165 118 A 55 56 0 0 1 55 118 Z" class="draw-stroke" style="--dur:0.95s; --delay:1.15s;" />
+          </svg>
+        `;
+      }
+
+      // 2. Ms. End: Menulis The End
+      if (anim.includes("the end") || nick.includes("end")) {
+        return `
+          <svg viewBox="0 0 260 150" aria-label="Menulis The End">
+            <text x="130" y="88" text-anchor="middle" font-size="56" class="handwritten-svg-text">The End!</text>
+            <path d="M 48 106 Q 130 116 212 104" class="draw-stroke draw-stroke-thin" style="--dur:0.7s; --delay:1.25s;" />
+          </svg>
+        `;
+      }
+
+      // 3. Ms. Feet: Menggambar langkah kaki
+      if (anim.includes("kaki") || nick.includes("feet")) {
+        return `
+          <svg viewBox="0 0 240 180" aria-label="Menggambar langkah kaki">
+            <!-- Jejak kaki kiri -->
+            <g class="pop-in" style="--delay:0.15s;">
+              <ellipse cx="78" cy="108" rx="16" ry="28" transform="rotate(-10 78 108)" fill="#18181B" />
+              <ellipse cx="82" cy="144" rx="11" ry="12" transform="rotate(-10 82 144)" fill="#18181B" />
+              <circle cx="66" cy="74" r="4.5" fill="#EE1C25" />
+              <circle cx="75" cy="70" r="3.8" fill="#EE1C25" />
+              <circle cx="84" cy="71" r="3.4" fill="#EE1C25" />
+              <circle cx="92" cy="74" r="3" fill="#EE1C25" />
+            </g>
+            <!-- Jejak kaki kanan melangkah maju -->
+            <g class="pop-in" style="--delay:0.65s;">
+              <ellipse cx="154" cy="72" rx="16" ry="28" transform="rotate(10 154 72)" fill="#EE1C25" />
+              <ellipse cx="150" cy="108" rx="11" ry="12" transform="rotate(10 150 108)" fill="#EE1C25" />
+              <circle cx="142" cy="37" r="3" fill="#18181B" />
+              <circle cx="150" cy="34" r="3.4" fill="#18181B" />
+              <circle cx="159" cy="34" r="3.8" fill="#18181B" />
+              <circle cx="168" cy="38" r="4.5" fill="#18181B" />
+            </g>
+          </svg>
+        `;
+      }
+
+      // 4. Ms. Line: Membuat garis lurus horizontal
+      if (anim.includes("garis lurus") || nick.includes("line")) {
+        return `
+          <svg viewBox="0 0 260 150" aria-label="Membuat garis lurus horizontal">
+            <circle cx="34" cy="75" r="8" class="pop-in" style="--delay:0.05s;" fill="#EE1C25" />
+            <line x1="34" y1="75" x2="216" y2="75" class="draw-stroke draw-stroke-red" style="--dur:1.0s; --delay:0.25s;" />
+            <polyline points="200,60 220,75 200,90" class="draw-stroke" style="--dur:0.45s; --delay:1.1s;" />
+          </svg>
+        `;
+      }
+
+      // 5. Ms. Chiffon: Menulis kata Chiffon
+      if (anim.includes("chiffon") || nick.includes("chiffon")) {
+        return `
+          <svg viewBox="0 0 260 150" aria-label="Menulis kata Chiffon">
+            <text x="130" y="88" text-anchor="middle" font-size="56" class="handwritten-svg-text">Chiffon</text>
+            <path d="M 185 38 L 188 46 L 196 49 L 188 52 L 185 60 L 182 52 L 174 49 L 182 46 Z" class="pop-in" style="--delay:1.25s;" fill="#F59E0B" />
+          </svg>
+        `;
+      }
+
+      // 6. Ms. Fairly: Menggambar tongkat peri
+      if (anim.includes("tongkat peri") || nick.includes("fair")) {
+        return `
+          <svg viewBox="0 0 240 180" aria-label="Menggambar tongkat peri">
+            <!-- Gagang tongkat -->
+            <line x1="65" y1="145" x2="145" y2="65" class="draw-stroke" style="--dur:0.8s; --delay:0.1s;" />
+            <!-- Bintang di ujung tongkat -->
+            <polygon points="155,34 162,51 180,53 166,65 170,83 155,73 140,83 144,65 130,53 148,51"
+                     class="draw-stroke draw-stroke-red draw-stroke-thin" style="--dur:0.9s; --delay:0.65s;" />
+            <!-- Kilau sihir -->
+            <circle cx="192" cy="36" r="4" class="pop-in" style="--delay:1.2s;" fill="#F59E0B" />
+            <circle cx="122" cy="34" r="3.5" class="pop-in" style="--delay:1.35s;" fill="#EE1C25" />
+            <circle cx="194" cy="78" r="3.5" class="pop-in" style="--delay:1.45s;" fill="#EE1C25" />
+          </svg>
+        `;
+      }
+
+      // 7. Ms. Key: Menggambar kunci
+      if (anim.includes("kunci") || nick.includes("key")) {
+        return `
+          <svg viewBox="0 0 250 160" aria-label="Menggambar kunci">
+            <!-- Kepala kunci bulat -->
+            <circle cx="72" cy="80" r="28" class="draw-stroke draw-stroke-red" style="--dur:0.85s; --delay:0.1s;" />
+            <circle cx="65" cy="80" r="7" class="draw-stroke draw-stroke-thin" style="--dur:0.4s; --delay:0.6s;" />
+            <!-- Batang & gigi kunci -->
+            <path d="M 100 80 L 196 80 L 196 104 M 172 80 L 172 98" class="draw-stroke" style="--dur:0.9s; --delay:0.75s;" />
+          </svg>
+        `;
+      }
+
+      // 8. Ms. Rain: Menggambar tetesan air dan awan
+      if (anim.includes("awan") || anim.includes("tetesan") || nick.includes("rain")) {
+        return `
+          <svg viewBox="0 0 240 180" aria-label="Menggambar tetesan air dan awan">
+            <!-- Awan -->
+            <path d="M 68 104 H 174 A 24 24 0 0 0 170 56 A 34 34 0 0 0 104 48 A 26 26 0 0 0 68 104 Z"
+                  class="draw-stroke" style="--dur:1.1s; --delay:0.1s;" />
+            <!-- Tetesan air hujan -->
+            <line x1="88" y1="120" x2="80" y2="144" class="draw-stroke draw-stroke-red" style="--dur:0.4s; --delay:0.95s;" />
+            <line x1="122" y1="120" x2="114" y2="148" class="draw-stroke draw-stroke-red" style="--dur:0.4s; --delay:1.15s;" />
+            <line x1="156" y1="120" x2="148" y2="144" class="draw-stroke draw-stroke-red" style="--dur:0.4s; --delay:1.35s;" />
+          </svg>
+        `;
+      }
+
+      // 9. Mr. One: Menulis angka 1 besar
+      if (anim.includes("angka 1") || nick.includes("one")) {
+        return `
+          <svg viewBox="0 0 220 180" aria-label="Menulis angka 1 besar">
+            <path d="M 86 54 L 114 34 L 114 142 M 82 142 L 146 142"
+                  class="draw-stroke draw-stroke-red" style="--dur:1.1s; --delay:0.1s;" />
+          </svg>
+        `;
+      }
+
+      // 10. Ms. Done: Menggambar tanda centang besar
+      if (anim.includes("centang") || nick.includes("done")) {
+        return `
+          <svg viewBox="0 0 220 180" aria-label="Menggambar tanda centang besar">
+            <circle cx="110" cy="90" r="64" class="draw-stroke draw-stroke-thin" style="--dur:0.85s; --delay:0.05s;" />
+            <polyline points="78,92 101,115 148,66"
+                      class="draw-stroke draw-stroke-red" style="--dur:0.75s; --delay:0.65s;" />
+          </svg>
+        `;
+      }
+
+      // Fallback untuk coach baru jika belum ada ilustrasi khusus
+      return `
+        <svg viewBox="0 0 260 150">
+          <text x="130" y="88" text-anchor="middle" font-size="48" class="handwritten-svg-text">${teacher.nickname}</text>
+        </svg>
+      `;
+    }
+
+    function openCoachAnimationModal(teacher) {
+      activeModalTeacher = teacher;
+      const backdrop = document.getElementById("animModalBackdrop");
+      const canvasBox = document.getElementById("doodleCanvasBox");
+      const animLabel = document.getElementById("modalAnimLabel");
+      const avatarBox = document.getElementById("modalAvatarBox");
+      const nickEl = document.getElementById("modalNickname");
+      const realEl = document.getElementById("modalRealname");
+      const storyEl = document.getElementById("modalStory");
+      const classesEl = document.getElementById("modalClassesText");
+
+      canvasBox.innerHTML = buildSignatureAnimationSVG(teacher);
+      animLabel.textContent = teacher.animasi || "Signature Gesture";
+
+      const photoSrc = resolvePhotoUrl(teacher.photo);
+      const initials = getInitials(teacher.realname);
+      avatarBox.innerHTML = `
+        <img src="${photoSrc}" alt="${teacher.nickname}"
+             onerror="this.style.display='none'; this.parentElement.textContent='${initials}';" />
+      `;
+
+      nickEl.textContent = `${teacher.nickname} ${teacher.emoji}`;
+      realEl.textContent = teacher.realname;
+      storyEl.textContent = teacher.story;
+      classesEl.textContent = teacher.status === "Hiatus"
+        ? "Status: Sedang Hiatus"
+        : `Kelas: ${teacher.classes.join(", ") || "-"}`;
+
+      backdrop.classList.add("open");
+      backdrop.setAttribute("aria-hidden", "false");
+    }
+
+    function closeCoachAnimationModal() {
+      const backdrop = document.getElementById("animModalBackdrop");
+      backdrop.classList.remove("open");
+      backdrop.setAttribute("aria-hidden", "true");
+    }
+
+    document.getElementById("closeModalBtn").addEventListener("click", closeCoachAnimationModal);
+    document.getElementById("animModalBackdrop").addEventListener("click", (e) => {
+      if (e.target.id === "animModalBackdrop") closeCoachAnimationModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeCoachAnimationModal();
+    });
+    document.getElementById("replayAnimBtn").addEventListener("click", () => {
+      if (activeModalTeacher) {
+        const canvasBox = document.getElementById("doodleCanvasBox");
+        canvasBox.innerHTML = "";
+        requestAnimationFrame(() => {
+          canvasBox.innerHTML = buildSignatureAnimationSVG(activeModalTeacher);
+        });
+      }
+    });
+
+    // =========================================================
+    // RENDER STATS, ROADMAP & CARDS
+    // =========================================================
+    function renderStats() {
+      const total = TEACHERS_DATA.length;
+      const active = TEACHERS_DATA.filter(t => t.status === "Active").length;
+      document.getElementById("statTotal").textContent = total;
+      document.getElementById("statActive").textContent = active;
+      document.getElementById("statLevels").textContent = LEVELS_DATA.length;
+    }
+
+    function renderRoadmap() {
+      const track = document.getElementById("roadmapTrack");
+      track.innerHTML = "";
+
+      LEVELS_DATA.forEach(item => {
+        const hasTeacher = item.handlers.length > 0;
+        const hasMulti = item.handlers.length > 1;
+        const isSelected = selectedLevel === item.level;
+
+        const node = document.createElement("div");
+        node.className = `level-node ${hasTeacher ? "has-teacher" : ""} ${hasMulti ? "has-multi" : ""} ${isSelected ? "selected" : ""}`;
+        node.setAttribute("data-cat", item.category);
+        node.title = hasTeacher
+          ? `${item.level} (${item.category}) — Diampu oleh: ${item.handlers.map(h => h.nickname).join(" & ")}`
+          : `${item.level} (${item.category}) — Belum ada pengampu aktif`;
+
+        let handlersHTML = "";
+        if (hasTeacher) {
+          const avatars = item.handlers.map(h => {
+            const initials = getInitials(h.nickname);
+            const photoSrc = resolvePhotoUrl(h.photo);
+            return `
+              <div class="mini-avatar" title="${h.emoji} ${h.nickname} (${h.realname})">
+                <img src="${photoSrc}" alt="${h.nickname}"
+                     style="width:100%;height:100%;border-radius:50%;object-fit:cover;"
+                     onerror="this.style.display='none'; this.parentElement.textContent='${initials}';" />
+              </div>
+            `;
+          }).join("");
+
+          const labelText = item.handlers.map(h => `${h.nickname}`).join(" & ");
+          handlersHTML = `
+            <div class="node-handlers">
+              <div class="avatar-stack">${avatars}</div>
+              <span class="handler-label">${labelText}</span>
+            </div>
+          `;
+        }
+
+        node.innerHTML = `
+          ${handlersHTML}
+          <div class="node-dot"></div>
+          <div class="node-info">
+            <span class="node-code">${item.level}</span>
+            <span class="node-cat">${item.category}</span>
+          </div>
+        `;
+
+        node.addEventListener("click", () => {
+          selectedLevel = selectedLevel === item.level ? null : item.level;
+          updateLevelBanner();
+          renderRoadmap();
+          renderCards();
+        });
+
+        track.appendChild(node);
+      });
+    }
+
+    function updateLevelBanner() {
+      const banner = document.getElementById("levelFilterBanner");
+      const text = document.getElementById("levelFilterText");
+      if (selectedLevel) {
+        const lvlObj = LEVELS_DATA.find(l => l.level === selectedLevel);
+        const count = lvlObj ? lvlObj.handlers.length : 0;
+        text.textContent = `Filter Jenjang Level: ${selectedLevel} (${count} Coach pengampu)`;
+        banner.classList.add("visible");
+      } else {
+        banner.classList.remove("visible");
+      }
+    }
+
+    function renderCards() {
+      const grid = document.getElementById("coachGrid");
+      grid.innerHTML = "";
+
+      const filtered = TEACHERS_DATA.filter(teacher => {
+        if (selectedLevel) {
+          const matchesLevel = teacher.classes.includes(selectedLevel) ||
+            (selectedLevel === "ECIP1" && teacher.classes.includes("ECP1")) ||
+            (selectedLevel === "ECP1" && teacher.classes.includes("ECIP1"));
+          if (!matchesLevel) return false;
+        }
+
+        if (currentFilter === "Active" && teacher.status !== "Active") return false;
+        if (currentFilter === "Hiatus" && teacher.status !== "Hiatus") return false;
+        if (currentFilter.startsWith("#") && !teacher.tags.includes(currentFilter)) return false;
+
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          const haystack = [
+            teacher.nickname,
+            teacher.realname,
+            teacher.story,
+            teacher.filosofi,
+            teacher.animasi,
+            ...teacher.tags,
+            ...teacher.classes
+          ].join(" ").toLowerCase();
+          if (!haystack.includes(q)) return false;
+        }
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="display:block;">
+            <h3>Tidak ada Coach yang sesuai dengan filter saat ini</h3>
+            <p style="margin-top:6px;font-size:0.88rem;">Coba pilih jenjang level lain pada garis roadmap atau reset filter pencarian.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(teacher => {
+        const isHiatus = teacher.status === "Hiatus";
+        const initials = getInitials(teacher.realname);
+        const photoSrc = resolvePhotoUrl(teacher.photo);
+
+        const classesHTML = isHiatus
+          ? `<span class="class-pill hiatus-pill">⏸ Sedang Hiatus</span>`
+          : teacher.classes.map(cls => `<span class="class-pill" data-lvl="${cls}" title="Klik untuk sorot ${cls} di peta level">${cls}</span>`).join("");
+
+        const tagsHTML = teacher.tags.map(tag => `<span class="tag-chip">${tag}</span>`).join("");
+
+        const card = document.createElement("article");
+        card.className = `coach-card ${isHiatus ? "is-hiatus" : ""}`;
+        card.title = "Klik untuk melihat animasi " + teacher.nickname;
+
+        card.innerHTML = `
+          <div class="card-top-banner">
+            <span class="anim-badge" title="Klik kartu untuk memutar animasi: ${teacher.animasi}">
+              ✨ ${teacher.animasi}
+            </span>
+            <span class="status-badge ${isHiatus ? "hiatus" : "active"}">
+              <span class="status-dot"></span>
+              ${teacher.status}
+            </span>
+          </div>
+
+          <div class="profile-identity">
+            <div class="photo-frame">
+              <img
+                src="${photoSrc}"
+                alt="${teacher.nickname}"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+              />
+              <span class="photo-initials">${initials}</span>
+            </div>
+
+            <div class="name-block">
+              <h2 class="coach-nickname">
+                <span>${teacher.nickname}</span>
+                <span class="nickname-emoji">${teacher.emoji}</span>
+              </h2>
+              <p class="coach-realname">${teacher.realname}</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="philosophy-quote">
+              “${teacher.filosofi}”
+            </div>
+
+            <div class="story-box">
+              <span class="story-label">The Story Behind the Nickname</span>
+              <p>${teacher.story}</p>
+            </div>
+
+            <div class="classes-section">
+              <span class="field-label">Kelas yang Diampu</span>
+              <div class="class-badges">
+                ${classesHTML}
+              </div>
+            </div>
+
+            <div class="card-footer-row">
+              <div class="tags-list">
+                ${tagsHTML}
+              </div>
+              <button type="button" class="play-anim-btn">▶ Animasi</button>
+            </div>
+          </div>
+        `;
+
+        // Klik badge kelas -> filter peta level (jangan buka modal animasi)
+        card.querySelectorAll(".class-pill[data-lvl]").forEach(pill => {
+          pill.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const rawLvl = pill.getAttribute("data-lvl");
+            const targetLvl = (rawLvl === "ECP1" && LEVELS_DATA.some(l => l.level === "ECIP1")) ? "ECIP1" : rawLvl;
+            selectedLevel = selectedLevel === targetLvl ? null : targetLvl;
+            updateLevelBanner();
+            renderRoadmap();
+            renderCards();
+            document.querySelector(".roadmap-card").scrollIntoView({ behavior: "smooth", block: "nearest" });
+          });
+        });
+
+        // Klik di mana saja pada kartu (atau tombol ▶ Animasi) -> putar animasi signature coach!
+        card.addEventListener("click", () => {
+          openCoachAnimationModal(teacher);
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    // Filter & Search Listeners
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.getAttribute("data-filter");
+        renderCards();
+      });
+    });
+
+    document.getElementById("searchInput").addEventListener("input", e => {
+      searchQuery = e.target.value.trim();
+      renderCards();
+    });
+
+    document.getElementById("clearLevelBtn").addEventListener("click", () => {
+      selectedLevel = null;
+      updateLevelBanner();
+      renderRoadmap();
+      renderCards();
+    });
+
+    document.getElementById("manualRefreshBtn").addEventListener("click", () => {
+      loadLiveSheetData();
+    });
+
+    // Initial Load from Google Sheets
+    loadLiveSheetData();
+  </script>
+</body>
+</html>
