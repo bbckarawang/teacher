@@ -17,6 +17,7 @@
       --cat-dyn: #2563EB;
       --cat-ecp: #7C3AED;
       --cat-private: #059669;
+      --cat-iht: #D97706;
       --bg-page: #F8F9FA;
       --bg-card: #FFFFFF;
       --text-main: #18181B;
@@ -345,12 +346,7 @@
     .cat-DYN { background-color: var(--cat-dyn); }
     .cat-ECP { background-color: var(--cat-ecp); }
     .cat-Private { background-color: var(--cat-private); }
-
-    .roadmap-hint {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      font-style: italic;
-    }
+    .cat-IHT { background-color: var(--cat-iht); }
 
     .roadmap-scroll-wrapper {
       overflow-x: auto;
@@ -476,6 +472,7 @@
     .level-node[data-cat="DYN"] { --node-color: var(--cat-dyn); }
     .level-node[data-cat="ECP"] { --node-color: var(--cat-ecp); }
     .level-node[data-cat="Private"] { --node-color: var(--cat-private); }
+    .level-node[data-cat="IHT"] { --node-color: var(--cat-iht); }
 
     .node-dot {
       width: 16px;
@@ -1296,8 +1293,8 @@
             <span class="legend-item"><span class="legend-dot cat-DYN"></span> DYN (Dynamic)</span>
             <span class="legend-item"><span class="legend-dot cat-ECP"></span> ECP</span>
             <span class="legend-item"><span class="legend-dot cat-Private"></span> Private</span>
+            <span class="legend-item"><span class="legend-dot cat-IHT"></span> IHT</span>
           </div>
-          <span class="roadmap-hint">*Otomatis terupdate sesuai tab Profil &amp; tab Level di Google Sheets</span>
         </div>
 
         <div class="roadmap-scroll-wrapper">
@@ -1810,6 +1807,11 @@
     "order": 45,
     "level": "IELTS",
     "category": "Private"
+  },
+  {
+    "order": 46,
+    "level": "IHT",
+    "category": "IHT"
   }
 ];
 
