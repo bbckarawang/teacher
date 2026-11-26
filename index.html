@@ -1395,8 +1395,10 @@
       "Ms. Fairly": "🧚‍♀️",
       "Ms. Key": "🔑",
       "Ms. Rain": "🌧️",
+      "Mr. Rain": "🌧️",
       "Mr. One": "1️⃣",
-      "Ms. Done": "✅"
+      "Ms. Done": "✅",
+      "Mr. Done": "✅"
     };
 
     // Data cadangan lokal jika browser dibuka tanpa internet / offline
@@ -1944,8 +1946,7 @@
             const isHiatus = kelasRaw.toLowerCase() === "hiatus";
             const classes = isHiatus ? [] : kelasRaw.split(",").map(c => c.trim()).filter(Boolean);
             const tagsRaw = r["Tags"] || "";
-            const tags = tagsRaw.split(/[
-,]+/).map(t => t.trim()).filter(Boolean);
+            const tags = tagsRaw.split(/[\r\n,]+/).map(t => t.trim()).filter(Boolean);
             const photoCol = r["Link foto"] || r["Link Foto"] || r["Foto"] || "";
 
             return {
@@ -2000,8 +2001,8 @@
       const anim = (teacher.animasi || "").toLowerCase();
       const nick = (teacher.nickname || "").toLowerCase();
 
-      // 1. Mr. Fun: Menggambar wajah tertawa (persis seperti contoh gambar bulat dengan mata ^^ dan mulut tertawa lebar)
-      if (anim.includes("tertawa") || nick.includes("fun")) {
+      // 1. Mr. Fun: Menggambar wajah tertawa (lingkaran bulat dengan mata ^^ dan mulut tertawa lebar)
+      if (anim.includes("tertawa") || /\bfun\b/.test(nick)) {
         return `
           <svg viewBox="0 0 220 220" aria-label="Menggambar wajah tertawa">
             <!-- Lingkaran wajah bulat -->
@@ -2017,7 +2018,7 @@
       }
 
       // 2. Ms. End: Menulis The End
-      if (anim.includes("the end") || nick.includes("end")) {
+      if (anim.includes("the end") || /\bend\b/.test(nick)) {
         return `
           <svg viewBox="0 0 260 150" aria-label="Menulis The End">
             <text x="130" y="88" text-anchor="middle" font-size="56" class="handwritten-svg-text">The End!</text>
@@ -2027,7 +2028,7 @@
       }
 
       // 3. Ms. Feet: Menggambar langkah kaki
-      if (anim.includes("kaki") || nick.includes("feet")) {
+      if (anim.includes("kaki") || /\bfeet\b/.test(nick)) {
         return `
           <svg viewBox="0 0 240 180" aria-label="Menggambar langkah kaki">
             <!-- Jejak kaki kiri -->
@@ -2053,7 +2054,7 @@
       }
 
       // 4. Ms. Line: Membuat garis lurus horizontal
-      if (anim.includes("garis lurus") || nick.includes("line")) {
+      if (anim.includes("garis lurus") || /\bline\b/.test(nick)) {
         return `
           <svg viewBox="0 0 260 150" aria-label="Membuat garis lurus horizontal">
             <circle cx="34" cy="75" r="8" class="pop-in" style="--delay:0.05s;" fill="#EE1C25" />
@@ -2064,7 +2065,7 @@
       }
 
       // 5. Ms. Chiffon: Menulis kata Chiffon
-      if (anim.includes("chiffon") || nick.includes("chiffon")) {
+      if (anim.includes("chiffon") || /\bchiffon\b/.test(nick)) {
         return `
           <svg viewBox="0 0 260 150" aria-label="Menulis kata Chiffon">
             <text x="130" y="88" text-anchor="middle" font-size="56" class="handwritten-svg-text">Chiffon</text>
@@ -2091,7 +2092,7 @@
       }
 
       // 7. Ms. Key: Menggambar kunci
-      if (anim.includes("kunci") || nick.includes("key")) {
+      if (anim.includes("kunci") || /\bkey\b/.test(nick)) {
         return `
           <svg viewBox="0 0 250 160" aria-label="Menggambar kunci">
             <!-- Kepala kunci bulat -->
@@ -2103,8 +2104,8 @@
         `;
       }
 
-      // 8. Ms. Rain: Menggambar tetesan air dan awan
-      if (anim.includes("awan") || anim.includes("tetesan") || nick.includes("rain")) {
+      // 8. Ms. Rain / Mr. Rain: Menggambar tetesan air dan awan
+      if (anim.includes("awan") || anim.includes("tetesan") || /\brain\b/.test(nick)) {
         return `
           <svg viewBox="0 0 240 180" aria-label="Menggambar tetesan air dan awan">
             <!-- Awan -->
@@ -2118,8 +2119,8 @@
         `;
       }
 
-      // 9. Mr. One: Menulis angka 1 besar
-      if (anim.includes("angka 1") || nick.includes("one")) {
+      // 9. Mr. One: Menulis angka 1 besar (pakai word boundary \bone\b agar tidak tertukar dengan "done")
+      if (anim.includes("angka 1") || /\bone\b/.test(nick)) {
         return `
           <svg viewBox="0 0 220 180" aria-label="Menulis angka 1 besar">
             <path d="M 86 54 L 114 34 L 114 142 M 82 142 L 146 142"
@@ -2128,8 +2129,8 @@
         `;
       }
 
-      // 10. Ms. Done: Menggambar tanda centang besar
-      if (anim.includes("centang") || nick.includes("done")) {
+      // 10. Mr. Done / Ms. Done: Menggambar tanda centang besar
+      if (anim.includes("centang") || /\bdone\b/.test(nick)) {
         return `
           <svg viewBox="0 0 220 180" aria-label="Menggambar tanda centang besar">
             <circle cx="110" cy="90" r="64" class="draw-stroke draw-stroke-thin" style="--dur:0.85s; --delay:0.05s;" />
@@ -2448,7 +2449,13 @@
       loadLiveSheetData();
     });
 
-    // Initial Load from Google Sheets
+    // Tampilkan data awal secara instan sambil menyinkronkan data live dari Google Sheets
+    TEACHERS_DATA = FALLBACK_TEACHERS;
+    LEVELS_DATA = buildLevelsWithHandlers(FALLBACK_LEVELS, FALLBACK_TEACHERS);
+    renderStats();
+    renderRoadmap();
+    renderCards();
+
     loadLiveSheetData();
   </script>
 </body>
